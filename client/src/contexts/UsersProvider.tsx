@@ -10,9 +10,9 @@ import { useSocket } from './SocketProvider';
 
 type IUserContext = {
 	users: User[];
-	setUsers: (users: User[]) => void;
+	setUsers: React.Dispatch<React.SetStateAction<User[]>>;
 	currentUser: User;
-	setCurrentUser: (user: User) => void;
+	setCurrentUser: React.Dispatch<React.SetStateAction<User>>;
 };
 
 const UserContext = createContext<IUserContext>({} as IUserContext);
@@ -26,15 +26,23 @@ type UserProviderProps = {
 const UserProdiver: React.FC<UserProviderProps> = ({ children }) => {
 	const { socket } = useSocket();
 	const [users, setUsers] = useState<User[]>([]);
-	const [currentUser, setCurrentUser] = useState<User>({
-		id: '1',
-		name: 'svv',
-	});
+	const [currentUser, setCurrentUser] = useState<User>({} as User);
 
 	useEffect(() => {
 		if (socket) {
-			socket.on('USERS', (users: User[]) => setUsers(users));
+			socket.on('USERS', (users: User[]) => {
+				setUsers(users);
+			});
+			socket.on('JOIN_SUCCESS', (user: User) => {
+				setCurrentUser(user);
+			});
 		}
+
+		return () => {
+			if (socket) {
+				socket.off('USERS');
+			}
+		};
 	}, [socket]);
 
 	return (

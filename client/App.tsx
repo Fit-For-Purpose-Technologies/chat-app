@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet } from 'react-native';
 import SocketProvider from './src/contexts/SocketProvider';
 import UserProdiver from './src/contexts/UsersProvider';
 import Home from './src/screens/Home';
