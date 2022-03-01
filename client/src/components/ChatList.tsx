@@ -10,6 +10,7 @@ const ChatList: React.FC<ChatListProps> = ({ messages }) => {
 	return (
 		<View style={styles.container}>
 			<FlatList
+				inverted
 				data={messages}
 				keyExtractor={(item) => item.id}
 				renderItem={({ item }) => <MessageCard message={item} />}

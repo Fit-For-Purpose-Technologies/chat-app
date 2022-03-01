@@ -22,12 +22,14 @@ type SocketProviderProps = {
 };
 
 const SocketProvider: React.FC<SocketProviderProps> = ({ children }) => {
-	//const IP = '10.121.200.179';
-	const IP = '172.20.10.5';
+	// const IP = '10.121.200.179'; // MIC
+	const IP = '192.168.1.61'; // FFP
+	// const IP = '172.20.10.5'; // 4G
 
 	const [socket, setSocket] = useState<ISocketProvider>({ socket: null });
 
 	useEffect(() => {
+		console.log('SocketProvider: useEffect');
 		setSocket({ socket: io(`http://${IP}:5000`) });
 	}, []);
 

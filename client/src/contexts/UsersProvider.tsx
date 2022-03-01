@@ -41,6 +41,7 @@ const UserProdiver: React.FC<UserProviderProps> = ({ children }) => {
 		return () => {
 			if (socket) {
 				socket.off('USERS');
+				socket.off('JOIN_SUCCESS');
 			}
 		};
 	}, [socket]);

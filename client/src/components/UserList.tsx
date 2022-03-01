@@ -1,12 +1,13 @@
 import { FlatList, View } from 'react-native';
-import { User } from '../screens/Home';
+import { useUserContext } from '../contexts/UsersProvider';
 import UserCard from './UserCard';
 
-interface UserListProps {
-	users: User[];
-}
+interface UserListProps {}
 
-const UserList: React.FC<UserListProps> = ({ users }) => {
+const UserList: React.FC<UserListProps> = () => {
+	const { users: connectedUsers, currentUser } = useUserContext();
+	const users = connectedUsers.filter((user) => user.id !== currentUser.id);
+
 	return (
 		<View
 			style={{
